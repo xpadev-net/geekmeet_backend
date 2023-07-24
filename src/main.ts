@@ -1,4 +1,4 @@
-import { setupFastify } from "@/fastify";
+import { setupExpress } from "@/express";
 import { FastifyPort } from "@/config";
 
-void setupFastify(FastifyPort);
+setupExpress(FastifyPort);

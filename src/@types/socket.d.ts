@@ -30,10 +30,20 @@ export type JoinRoomBody = {
 export type SendMessageBody =
   | {
       type: "private";
-      dest: string;
+      dest: UUID;
       data: unknown;
     }
   | {
       type: "public";
       data: unknown;
     };
+
+export type WebrtcSdpBody = {
+  description: RTCSessionDescription;
+  dest: UUID;
+};
+
+export type WebrtcIceBody = {
+  candidate: RTCIceCandidate;
+  dest: UUID;
+};

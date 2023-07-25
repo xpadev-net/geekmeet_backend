@@ -79,38 +79,35 @@ function startServerConnection() {
 		const pc = peers.get(response.userId);
 		pc._stopPeerConnection();
 	})
+	socket.on("webrtcSdp",(response)=>{
+		const pc = peers.get(response.src);
+		if (response.description.type === 'offer') {
+			pc.setRemoteDescription(response.description).then(() => {
+				// Answerの作成
+				pc.createAnswer().then(pc._setDescription).catch(errorHandler);
+			}).catch(errorHandler);
+		} else if (response.description.type === 'answer') {
+			pc.setRemoteDescription(response.description).catch(errorHandler);
+		}
+	})
+
+	const iceHandler = (response)=>{
+		const pc = peers.get(response.src);
+		// ICE受信
+		if (pc.remoteDescription) {
+			pc.addIceCandidate(new RTCIceCandidate(response.candidate)).catch(errorHandler);
+		} else {
+			// SDPが未処理のためキューに貯める
+			pc._queue.push(response);
+		}
+		if (pc._queue.length > 0 && pc.remoteDescription) {
+			iceHandler(pc._queue.shift())
+		}
+	}
+	socket.on("webrtcIce",iceHandler)
 
 	const onMessage = (response)=>{
 		console.log("onMessage",response)
-		const pc = peers.get(response.src);
-		if (!pc) {
-			return;
-		}
-		// 以降はWebRTCのシグナリング処理
-		if (response.sdp) {
-			// SDP受信
-			if (response.sdp.type === 'offer') {
-				pc.setRemoteDescription(response.sdp).then(() => {
-					// Answerの作成
-					pc.createAnswer().then(pc._setDescription).catch(errorHandler);
-				}).catch(errorHandler);
-			} else if (response.sdp.type === 'answer') {
-				pc.setRemoteDescription(response.sdp).catch(errorHandler);
-			}
-		}
-		if (response.ice) {
-			// ICE受信
-			if (pc.remoteDescription) {
-				pc.addIceCandidate(new RTCIceCandidate(response.ice)).catch(errorHandler);
-			} else {
-				// SDPが未処理のためキューに貯める
-				pc._queue.push(response);
-				return;
-			}
-		}
-		if (pc._queue.length > 0 && pc.remoteDescription) {
-			onMessage(pc._queue.shift())
-		}
 	}
 	socket.on("message",onMessage)
 
@@ -131,10 +128,9 @@ function startPeerConnection(id, sdpType) {
 			pc.setLocalDescription(description).then(() => {
 				console.log({sdp: pc.localDescription, src: socket.id})
 				// SDP送信
-				socket.emit("message",{
-					type: "private",
+				socket.emit("webrtcSdp",{
 					dest: id,
-					data: {sdp: pc.localDescription, src: socket.id}
+					description: pc.localDescription
 				})
 			}).catch(errorHandler);
 		}
@@ -143,10 +139,9 @@ function startPeerConnection(id, sdpType) {
 		if (event.candidate) {
 			// ICE送信
 			console.log({ice: event.candidate, src: socket.id})
-			socket.emit("message",{
-				type: "private",
+			socket.emit("webrtcIce",{
 				dest: id,
-				data: {ice: event.candidate, src: socket.id}
+				candidate: event.candidate
 			})
 		}
 	};

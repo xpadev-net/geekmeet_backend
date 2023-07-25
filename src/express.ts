@@ -2,6 +2,8 @@ import { setupSocketIO } from "@/socketio";
 import * as fs from "fs";
 import express from "express";
 import * as https from "https";
+import cors from "cors";
+import { ExpressCorsHost } from "@/config";
 
 export const setupExpress = (port: number) => {
   const app = express();
@@ -13,6 +15,12 @@ export const setupExpress = (port: number) => {
     app
   );
   setupSocketIO(server);
+  app.use(
+    cors({
+      origin: ExpressCorsHost,
+      optionsSuccessStatus: 200,
+    })
+  );
   app.use(express.static("./public"));
 
   server.listen(port);

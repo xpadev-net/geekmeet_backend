@@ -1,4 +1,4 @@
 import { setupExpress } from "@/express";
-import { FastifyPort } from "@/config";
+import { ExpressPort } from "@/config";
 
-setupExpress(FastifyPort);
+setupExpress(ExpressPort);

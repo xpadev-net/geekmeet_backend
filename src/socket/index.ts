@@ -1,6 +1,6 @@
 import { Socket } from "socket.io";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
-import { ConnectionContext } from "@/@types/socket";
+import { ClientToServerEvents, ConnectionContext } from "@/@types/socket";
 import { onCreateRoomHandler } from "@/socket/createRoom";
 import { onJoinRoomHandler } from "@/socket/joinRoom";
 import { onMessageHandler } from "@/socket/message";
@@ -9,7 +9,7 @@ import { onWebrtcIceHandler } from "@/socket/webrtcIce";
 import { onWebrtcSdpHandler } from "@/socket/webrtcSdp";
 
 export const onConnectHandler = (
-  socket: Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>
+  socket: Socket<ClientToServerEvents, DefaultEventsMap>
 ) => {
   const context: ConnectionContext = {};
 

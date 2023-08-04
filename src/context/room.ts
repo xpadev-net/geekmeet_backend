@@ -5,6 +5,7 @@ export const rooms: { [roomId: UUID]: Room } = {
   ["test" as UUID]: {
     type: "unlisted",
     id: "test" as UUID,
+    isLt: false,
     owner: "",
     users: [],
   },

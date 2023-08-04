@@ -16,10 +16,12 @@ export type ConnectionContext = {
 
 export type CreateRoomBody =
   | {
-      type: "unlisted";
+      isPrivate: false;
+      isLt: boolean;
     }
   | {
-      type: "private";
+      isPrivate: true;
+      isLt: boolean;
       allowed: string[];
     };
 
@@ -46,4 +48,13 @@ export type WebrtcSdpBody = {
 export type WebrtcIceBody = {
   candidate: RTCIceCandidate;
   dest: UUID;
+};
+
+export type ClientToServerEvents = {
+  createRoom: (param: CreateRoomBody) => void;
+  joinRoom: (param: JoinRoomBody) => void;
+  webrtcIce: (param: WebrtcIceBody) => void;
+  webrtcSdp: (param: WebrtcSdpBody) => void;
+  message: (param: SendMessageBody) => void;
+  leaveRoom: () => void;
 };

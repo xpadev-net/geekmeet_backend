@@ -28,10 +28,11 @@ const createRoom = (
   roomId: UUID,
   userId: string
 ): Room => {
-  if (param.type === "unlisted") {
+  if (!param.isPrivate) {
     return {
       type: "unlisted",
       id: roomId,
+      isLt: param.isLt,
       owner: userId,
       users: [],
     };
@@ -39,6 +40,7 @@ const createRoom = (
   return {
     type: "private",
     id: roomId,
+    isLt: param.isLt,
     owner: userId,
     allowed: param.allowed,
     users: [],

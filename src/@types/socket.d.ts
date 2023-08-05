@@ -1,13 +1,7 @@
 import { Socket } from "socket.io";
-import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { UUID } from "@/@types/brands";
 
-export type SocketIO = Socket<
-  DefaultEventsMap,
-  DefaultEventsMap,
-  DefaultEventsMap,
-  any
->;
+export type SocketIO = Socket<ClientToServerEvents, ServerToClientEvents>;
 
 export type ConnectionContext = {
   currentRoomId?: UUID;
@@ -58,3 +52,47 @@ export type ClientToServerEvents = {
   message: (param: SendMessageBody) => void;
   leaveRoom: () => void;
 };
+
+export type ServerToClientEvents = {
+  joinRoom: (param: JoinRoomResponse) => void;
+  connecting: (param: ConnectingResponse) => void;
+  leave: (param: LeaveResponse) => void;
+  webrtcSdp: (param: WebrtcSdpResponse) => void;
+  webrtcIce: (param: WebrtcIceResponse) => void;
+  createRoom: (param: CreateRoomResponse) => void;
+  message: (param: SendMessageResponse) => void;
+};
+
+export type SendMessageResponse = {
+  src: string;
+  data: unknown;
+};
+
+export type CreateRoomResponse = {
+  code: 200;
+  roomId: UUID;
+};
+export type WebrtcSdpResponse = {
+  description: RTCSessionDescription;
+  src: string;
+};
+export type WebrtcIceResponse = {
+  candidate: RTCIceCandidate;
+  src: string;
+};
+export type LeaveResponse = { userId: string };
+export type ConnectingResponse = { userId: string };
+
+export type JoinRoomResponse =
+  | {
+      code: 404;
+      message: string;
+    }
+  | {
+      code: 403;
+      message: string;
+    }
+  | {
+      code: 200;
+      users: string[];
+    };

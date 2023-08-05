@@ -9,9 +9,13 @@ export const onMessageHandler = (
     if (!context.currentRoomId) return;
     if (params.type === "private") {
       if (!isUserInSameRoom(context, params.dest)) return;
-      socket.to(params.dest).emit("message", params.data);
+      socket
+        .to(params.dest)
+        .emit("message", { src: socket.id, data: params.data });
     } else {
-      socket.to(context.currentRoomId).emit("message", params.data);
+      socket
+        .to(context.currentRoomId)
+        .emit("message", { src: socket.id, data: params.data });
     }
   };
 };

@@ -12,7 +12,7 @@ export const onCreateRoomHandler = (
     const roomId = getUniqueRoomId();
     rooms[roomId] = createRoom(param, roomId, socket.id);
     context.currentRoomId = roomId;
-    void socket.join(roomId);
+    socket.emit("createRoom", { code: 200, roomId });
   };
 };
 const getUniqueRoomId = () => {

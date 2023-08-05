@@ -10,7 +10,11 @@ export const processExitRoom = (
   if (!room) return;
   room.users = room.users.filter((user) => user != socket.id);
   if (room.users.length === 0) {
-    delete rooms[context.currentRoomId];
+    const roomId = context.currentRoomId;
+    if (room.timer) clearTimeout(room.timer);
+    room.timer = setTimeout(() => {
+      delete rooms[roomId];
+    }, 1000 * 60 * 5);
   }
   void socket.leave(context.currentRoomId);
   socket.to(context.currentRoomId).emit("leave", { userId: socket.id });

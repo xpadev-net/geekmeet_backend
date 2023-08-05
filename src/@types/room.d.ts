@@ -1,20 +1,20 @@
 import { UUID } from "@/@types/brands";
 
-export type UnlistedRoom = {
-  type: "unlisted";
+export type BaseRoom = {
   id: UUID;
   isLt: boolean;
   owner: string;
   users: string[];
+  timer?: NodeJS.Timeout;
 };
 
-export type PrivateRoom = {
+export type UnlistedRoom = BaseRoom & {
+  type: "unlisted";
+};
+
+export type PrivateRoom = BaseRoom & {
   type: "private";
-  id: UUID;
-  isLt: boolean;
-  owner: string;
   allowed: string[];
-  users: string[];
 };
 
 export type Room = UnlistedRoom | PrivateRoom;

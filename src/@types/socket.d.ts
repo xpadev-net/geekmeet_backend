@@ -3,6 +3,8 @@ import { UUID } from "@/@types/brands";
 
 export type SocketIO = Socket<ClientToServerEvents, ServerToClientEvents>;
 
+export type User = { id: string; name: string };
+
 export type ConnectionContext = {
   currentRoomId?: UUID;
   email?: string;
@@ -21,6 +23,7 @@ export type CreateRoomBody =
 
 export type JoinRoomBody = {
   roomId: UUID;
+  name: string;
 };
 
 export type SendMessageBody =
@@ -81,7 +84,7 @@ export type WebrtcIceResponse = {
   src: string;
 };
 export type LeaveResponse = { userId: string };
-export type ConnectingResponse = { userId: string };
+export type ConnectingResponse = { userId: string; name: string };
 
 export type JoinRoomResponse =
   | {
@@ -94,5 +97,5 @@ export type JoinRoomResponse =
     }
   | {
       code: 200;
-      users: string[];
+      users: User[];
     };

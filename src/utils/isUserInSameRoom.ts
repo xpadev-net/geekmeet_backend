@@ -9,5 +9,5 @@ export const isUserInSameRoom = (
   if (!context.currentRoomId) return false;
   const room = rooms[context.currentRoomId];
   if (!room) return false;
-  return room.users.includes(targetUserId);
+  return room.users.filter((user) => user.id === targetUserId).length > 0;
 };

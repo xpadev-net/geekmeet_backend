@@ -8,7 +8,7 @@ export const processExitRoom = (
   if (!context.currentRoomId) return;
   const room = rooms[context.currentRoomId];
   if (!room) return;
-  room.users = room.users.filter((user) => user != socket.id);
+  room.users = room.users.filter((user) => user.id != socket.id);
   if (room.users.length === 0) {
     const roomId = context.currentRoomId;
     if (room.timer) clearTimeout(room.timer);

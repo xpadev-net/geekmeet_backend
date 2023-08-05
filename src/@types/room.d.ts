@@ -1,10 +1,11 @@
 import { UUID } from "@/@types/brands";
+import { User } from "@/@types/socket";
 
 export type BaseRoom = {
   id: UUID;
   isLt: boolean;
   owner: string;
-  users: string[];
+  users: User[];
   timer?: NodeJS.Timeout;
 };
 

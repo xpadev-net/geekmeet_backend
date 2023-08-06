@@ -19,4 +19,4 @@ WORKDIR /app
 COPY --from=builder /app ./
 
 # Copy artifacts
-CMD ["pnpm", "run", "run"]
+CMD ["npm", "run", "run"]

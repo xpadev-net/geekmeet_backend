@@ -1,10 +1,10 @@
 import { Server } from "socket.io";
-import * as https from "https";
+import * as http from "http";
 import { onConnectHandler } from "@/socket";
 import { ClientToServerEvents, ServerToClientEvents } from "@/@types/socket";
 import { ExpressCorsHost } from "@/config";
 
-const setupSocketIO = (server: https.Server) => {
+const setupSocketIO = (server: http.Server) => {
   const io = new Server<ClientToServerEvents, ServerToClientEvents>(server, {
     cors: {
       origin: ExpressCorsHost,

@@ -1,6 +1,6 @@
 {
   "name": "geekmeet_backend",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "scripts": {
     "run": "ts-node -r tsconfig-paths/register src/main.ts",
     "dev": "ts-node-dev -r tsconfig-paths/register src/main.ts",

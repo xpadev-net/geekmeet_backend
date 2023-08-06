@@ -8,6 +8,7 @@ export type User = { id: string; name: string };
 export type ConnectionContext = {
   currentRoomId?: UUID;
   email?: string;
+  name: string;
 };
 
 export type CreateRoomBody =
@@ -47,6 +48,10 @@ export type WebrtcIceBody = {
   dest: UUID;
 };
 
+export type ChatBody = {
+  content: string;
+};
+
 export type ClientToServerEvents = {
   createRoom: (param: CreateRoomBody) => void;
   joinRoom: (param: JoinRoomBody) => void;
@@ -54,6 +59,7 @@ export type ClientToServerEvents = {
   webrtcSdp: (param: WebrtcSdpBody) => void;
   message: (param: SendMessageBody) => void;
   leaveRoom: () => void;
+  chat: (param: ChatBody) => void;
 };
 
 export type ServerToClientEvents = {
@@ -64,6 +70,13 @@ export type ServerToClientEvents = {
   webrtcIce: (param: WebrtcIceResponse) => void;
   createRoom: (param: CreateRoomResponse) => void;
   message: (param: SendMessageResponse) => void;
+  chat: (param: ChatResponse) => void;
+};
+export type ChatResponse = {
+  id: UUID;
+  content: string;
+  src: string;
+  name: string;
 };
 
 export type SendMessageResponse = {

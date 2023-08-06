@@ -7,11 +7,14 @@ import { onMessageHandler } from "@/socket/message";
 import { processExitRoom } from "@/socket/exitRoom";
 import { onWebrtcIceHandler } from "@/socket/webrtcIce";
 import { onWebrtcSdpHandler } from "@/socket/webrtcSdp";
+import { onChatHandler } from "@/socket/chat";
 
 export const onConnectHandler = (
   socket: Socket<ClientToServerEvents, DefaultEventsMap>
 ) => {
-  const context: ConnectionContext = {};
+  const context: ConnectionContext = {
+    name: "",
+  };
 
   socket.on("createRoom", onCreateRoomHandler(socket, context));
   socket.on("joinRoom", onJoinRoomHandler(socket, context));
@@ -20,6 +23,7 @@ export const onConnectHandler = (
   socket.on("webrtcSdp", onWebrtcSdpHandler(socket, context));
 
   socket.on("message", onMessageHandler(socket, context));
+  socket.on("chat", onChatHandler(socket, context));
 
   socket.on("leaveRoom", () => {
     processExitRoom(socket, context);

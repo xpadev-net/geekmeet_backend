@@ -26,6 +26,7 @@ export const onJoinRoomHandler = (
     }
     if (room.timer) clearTimeout(room.timer);
     context.currentRoomId = room.id;
+    context.name = param.name;
     socket
       .to(room.id)
       .emit("connecting", { userId: socket.id, name: param.name });

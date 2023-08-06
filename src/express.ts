@@ -14,7 +14,6 @@ export const setupExpress = (port: number) => {
       optionsSuccessStatus: 200,
     })
   );
-  app.use(express.static("./public"));
 
   server.listen(port);
 };

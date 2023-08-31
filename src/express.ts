@@ -14,6 +14,9 @@ export const setupExpress = (port: number) => {
       optionsSuccessStatus: 200,
     })
   );
+  app.get("/healthz", (req, res) => {
+    res.send("ok");
+  });
 
   server.listen(port);
 };

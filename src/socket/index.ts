@@ -7,6 +7,7 @@ import { onCreateRoomHandler } from "@/socket/createRoom";
 import { processExitRoom } from "@/socket/exitRoom";
 import { onJoinRoomHandler } from "@/socket/joinRoom";
 import { onMessageHandler } from "@/socket/message";
+import { onStateChange } from "@/socket/stateChange";
 import { onWebrtcIceHandler } from "@/socket/webrtcIce";
 import { onWebrtcSdpHandler } from "@/socket/webrtcSdp";
 
@@ -35,4 +36,6 @@ export const onConnectHandler = (
   socket.on("error", () => {
     processExitRoom(socket, context);
   });
+
+  socket.on("stateChange", onStateChange(socket, context));
 };

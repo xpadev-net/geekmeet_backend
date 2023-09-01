@@ -1,4 +1,4 @@
-import { ConnectionContext, WebrtcSdpBody, SocketIO } from "@/@types/socket";
+import { ConnectionContext, SocketIO, WebrtcSdpBody } from "@/@types/socket";
 import { isUserInSameRoom } from "@/utils/isUserInSameRoom";
 
 export const onWebrtcSdpHandler = (

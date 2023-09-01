@@ -1,6 +1,6 @@
+import { UUID } from "@/@types/brands";
 import { ConnectionContext } from "@/@types/socket";
 import { rooms } from "@/context/room";
-import { UUID } from "@/@types/brands";
 
 export const isUserInSameRoom = (
   context: ConnectionContext,

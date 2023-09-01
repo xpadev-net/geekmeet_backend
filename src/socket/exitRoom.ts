@@ -1,5 +1,5 @@
-import { rooms } from "@/context/room";
 import { ConnectionContext, SocketIO } from "@/@types/socket";
+import { rooms } from "@/context/room";
 
 export const processExitRoom = (
   socket: SocketIO,

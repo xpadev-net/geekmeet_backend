@@ -1,5 +1,5 @@
-import { rooms } from "@/context/room";
 import { ConnectionContext, JoinRoomBody, SocketIO } from "@/@types/socket";
+import { rooms } from "@/context/room";
 
 export const onJoinRoomHandler = (
   socket: SocketIO,

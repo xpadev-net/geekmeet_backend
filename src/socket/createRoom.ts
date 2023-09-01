@@ -1,8 +1,8 @@
-import { rooms } from "@/context/room";
-import { ConnectionContext, CreateRoomBody, SocketIO } from "@/@types/socket";
-import { uuid } from "@/utils/uuid";
 import { UUID } from "@/@types/brands";
 import { Room } from "@/@types/room";
+import { ConnectionContext, CreateRoomBody, SocketIO } from "@/@types/socket";
+import { rooms } from "@/context/room";
+import { uuid } from "@/utils/uuid";
 
 export const onCreateRoomHandler = (
   socket: SocketIO,

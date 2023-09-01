@@ -1,13 +1,14 @@
 import { Socket } from "socket.io";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
+
 import { ClientToServerEvents, ConnectionContext } from "@/@types/socket";
+import { onChatHandler } from "@/socket/chat";
 import { onCreateRoomHandler } from "@/socket/createRoom";
+import { processExitRoom } from "@/socket/exitRoom";
 import { onJoinRoomHandler } from "@/socket/joinRoom";
 import { onMessageHandler } from "@/socket/message";
-import { processExitRoom } from "@/socket/exitRoom";
 import { onWebrtcIceHandler } from "@/socket/webrtcIce";
 import { onWebrtcSdpHandler } from "@/socket/webrtcSdp";
-import { onChatHandler } from "@/socket/chat";
 
 export const onConnectHandler = (
   socket: Socket<ClientToServerEvents, DefaultEventsMap>

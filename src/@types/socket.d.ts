@@ -1,4 +1,5 @@
 import { Socket } from "socket.io";
+
 import { UUID } from "@/@types/brands";
 
 export type SocketIO = Socket<ClientToServerEvents, ServerToClientEvents>;
